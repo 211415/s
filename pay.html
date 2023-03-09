@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <link rel="shortcut icon" href="favicon.ico" />
+    <title>Оплата заказа</title>
+
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Оплата заказа" />
+    <meta name="author" content="Элиас Труман" />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+
+    <link rel="stylesheet" type="text/css" href="assets/css/header.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/body.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/media.css" />
+
+    <script language="javascript" type="text/javascript">
+      function onLoad() {
+        var query = window.location.href.split("?")[1];
+        if (!query) {
+          document.getElementById("cardMain").innerHTML =
+            "<h4>Отсутствует какой-либо параметр. Перезайдите на страницу.</h4>";
+        }
+        var params = query.split("&");
+        if (params.length < 3) {
+          document.getElementById("cardMain").innerHTML =
+            "<h4>Отсутствует нужный параметр. Перезайдите на страницу.</h4>";
+        }
+        var soft = params[0].split("=")[1];
+        if (soft == "ps") {
+          soft = "Спам Звонками";
+        } else if (soft == "vkc") {
+          soft = "ВК Чекер";
+        } else {
+          document.getElementById("cardMain").innerHTML =
+            "<h4>Софт указан неверно. Перезайдите на страницу.</h4>";
+        }
+        var until = params[1].split("=")[1];
+        if (until == "w") {
+          until = "неделя";
+        } else if (until == "m") {
+          until = "месяц";
+        } else if (until == "lt") {
+          until = "лайфтайм";
+        } else {
+          document.getElementById("cardMain").innerHTML =
+            "<h4>Срок лицензии указан неверно. Перезайдите на страницу.</h4>";
+        }
+        var sum = params[2].split("=")[1].split("#")[0];
+        if (
+          (sum != "500") &
+          (sum != "1000") &
+          (sum != "1500") &
+          (sum != "2000")
+        ) {
+          document.getElementById("cardMain").innerHTML =
+            "<h4>Сумма указана неверно. Перезайдите на страницу.</h4>";
+        }
+        document.getElementById("soft").innerHTML = soft;
+        document.getElementById("until").innerHTML = until;
+        document.getElementById("sum").innerHTML = "₽" + sum;
+      }
+      function openQiwiLink() {
+        link =
+          "https://qiwi.com/payment/form/99999?extra['accountType']=nickname&extra['account']=3IPLL&amount=";
+        newLink = link + document.getElementById("sum").innerHTML.split("₽")[1];
+        window.open(newLink, "_blank");
+      }
+      function showHiddenCard() {
+        document
+          .getElementById("hiddenCardElement")
+          .classList.remove("hiddenCard");
+      }
+      function showHiddenCard2() {
+        document
+          .getElementById("hiddenCardElement2")
+          .classList.remove("hiddenCard");
+      }
+      function fallbackCopyTextToClipboard(text) {
+        var textArea = document.createElement("textarea");
+        textArea.value = text;
+
+        textArea.style.top = "0";
+        textArea.style.left = "0";
+        textArea.style.position = "fixed";
+
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+
+        try {
+          var successful = document.execCommand("copy");
+          var msg = successful ? "successful" : "unsuccessful";
+          console.log("Fallback: Copying text command was " + msg);
+        } catch (err) {
+          console.error("Fallback: Oops, unable to copy", err);
+        }
+
+        document.body.removeChild(textArea);
+      }
+      function copyTextToClipboard() {
+        var text = document.getElementById("textToCopy").innerText;
+        if (!navigator.clipboard) {
+          fallbackCopyTextToClipboard(text);
+          return;
+        }
+        navigator.clipboard.writeText(text).then(
+          function () {
+            console.log("Async: Copying to clipboard was successful!");
+          },
+          function (err) {
+            console.error("Async: Could not copy text: ", err);
+          }
+        );
+      }
+    </script>
+  </head>
+  <header class="header">
+    <div class="container">
+      <nav class="navbar navbar-expand-sm">
+        <button
+          class="navbar-toggler custom-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNavDropdown"
+          aria-controls="navbarNavDropdown"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav align-content-center">
+            <li class="nav-item">
+              <a class="nav-link" href="/index.html">Обо мне</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Софт
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" href="/vk-combine.html">ВК Чекер</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="/phone-spammer.html"
+                    >Спам Звонками</a
+                  >
+                </li>
+              </ul>
+            </li>
+            <li class="telegram-svg">
+              <a href="https://t.me/elstrm" target="_blank">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  fill="currentColor"
+                  class="bi bi-telegram"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.287 5.906c-.778.324-2.334.994-4.666 2.01-.378.15-.577.298-.595.442-.03.243.275.339.69.47l.175.055c.408.133.958.288 1.243.294.26.006.549-.1.868-.32 2.179-1.471 3.304-2.214 3.374-2.23.05-.012.12-.026.166.016.047.041.042.12.037.141-.03.129-1.227 1.241-1.846 1.817-.193.18-.33.307-.358.336a8.154 8.154 0 0 1-.188.186c-.38.366-.664.64.015 1.088.327.216.589.393.85.571.284.194.568.387.936.629.093.06.183.125.27.187.331.236.63.448.997.414.214-.02.435-.22.547-.82.265-1.417.786-4.486.906-5.751a1.426 1.426 0 0 0-.013-.315.337.337 0 0 0-.114-.217.526.526 0 0 0-.31-.093c-.3.005-.763.166-2.984 1.09z"
+                  /></svg
+              ></a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </header>
+  <body onload="onLoad()">
+    <main>
+      <section class="py-5">
+        <div
+          id="cardMain"
+          class="container h-100 d-flex align-items-center justify-content-center"
+        >
+          <div class="text-center pay-card" style="width: 350px">
+            <h2
+              style="
+                color: rgb(240, 246, 252);
+                font-weight: 600;
+                font-size: 28px;
+                margin-bottom: 2rem;
+              "
+            >
+              Оплата заказа
+            </h2>
+            <div class="col">
+              <div class="card">
+                <div class="card-body text-center p-4">
+                  <h6
+                    class="text-uppercase card-subtitle"
+                    style="
+                      font-size: 16px;
+                      color: rgb(240, 246, 252);
+                      text-align: left;
+                    "
+                  >
+                    сумма
+                  </h6>
+                  <h4 id="sum" class="display-6 fw-bold price-policy"></h4>
+                </div>
+                <div class="card-footer p-0">
+                  <ul
+                    class="text-start"
+                    style="
+                      margin-bottom: 1rem !important;
+                      margin-top: 1rem !important;
+                      max-width: 96.65%;
+                    "
+                  >
+                    <li class="mb-2">
+                      Нажмите на кнопку оплатить. При нажатии вы подтверждаете,
+                      что согласны с
+                      <a href="/ПС-1.pdf" target="_blank"
+                        >Пользовательским Соглашением</a
+                      >.
+                    </li>
+                    <li class="mb-2">
+                      Если вы вышли со страницы оплаты, то перезайдите через
+                      кнопку ниже.
+                    </li>
+                  </ul>
+                  <a
+                    class="btn btn-primary d-block w-100"
+                    type="button"
+                    style="font-weight: bold"
+                    onclick="openQiwiLink(); showHiddenCard();"
+                    >Оплатить</a
+                  >
+                </div>
+              </div>
+            </div>
+            <div id="hiddenCardElement" class="col py-4 hiddenCard">
+              <div class="card">
+                <div class="p-0">
+                  <ul
+                    class="text-start"
+                    style="
+                      margin-bottom: 1rem !important;
+                      margin-top: 1rem !important;
+                      max-width: 96.65%;
+                    "
+                  >
+                    <li class="mb-2">
+                      Теперь нужно зайти в
+                      <a href="https://t.me/eliastruman" target="_blank"
+                        >эту группу</a
+                      >.
+                    </li>
+                  </ul>
+                  <a
+                    class="btn btn-primary d-block w-100"
+                    type="button"
+                    style="font-weight: bold"
+                    onclick="showHiddenCard2();"
+                    >Подтверждаю, что я сделал это</a
+                  >
+                </div>
+              </div>
+            </div>
+            <div id="hiddenCardElement2" class="col py-0 hiddenCard">
+              <div class="card">
+                <div class="p-0">
+                  <ul
+                    class="text-start"
+                    style="
+                      margin-bottom: 1rem !important;
+                      margin-top: 1rem !important;
+                      max-width: 96.65%;
+                    "
+                  >
+                    <li class="mb-2">
+                      Если вы подтверждаете оплату, то вставьте следующий текст
+                      в диалог с менеджером. В рабочую смену максимальное время
+                      ожидания билда 30 минут.
+                    </li>
+                  </ul>
+                  <div class="container">
+                    <div class="row">
+                      <p id="textToCopy" style="filter: brightness(70%)">
+                        Привет, оплатил софт <soft id="soft"></soft>. Срок
+                        лицензии: <until id="until"></until>.
+                      </p>
+                    </div>
+                  </div>
+                  <a
+                    class="btn btn-primary d-block w-100"
+                    type="button"
+                    style="font-weight: bold"
+                    onclick='copyTextToClipboard(); window.open("https://t.me/elstrm", "_blank");'
+                    >Скопировать текст и связаться с менеджером</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

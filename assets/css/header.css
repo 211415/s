@@ -1,0 +1,68 @@
+.navbar {
+  --bs-navbar-padding-y: 0.15rem;
+  background-color: #161b22;
+}
+
+.header {
+  background-color: #161b22;
+}
+
+.navbar-expand-sm .navbar-nav .nav-link {
+  padding-left: 0;
+  padding-right: 15px;
+}
+
+.telegram-svg a svg {
+  margin-top: 10px;
+}
+
+.telegram-svg a:hover {
+  filter: brightness(70%);
+}
+
+.navbar a {
+  color: rgb(240, 246, 252);
+}
+
+.nav-item {
+  font-weight: 600;
+}
+
+.nav-link:hover,
+.nav-link:focus {
+  color: rgb(240, 246, 252, 0.6);
+}
+
+.dropdown-menu {
+  border: 1px solid #30363d;
+  background-color: #161b22;
+}
+
+.dropdown-item:hover {
+  background-color: #30363d;
+  color: rgb(240, 246, 252);
+}
+
+.dropdown-toggle[aria-expanded="true"] {
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.navbar-toggler {
+  border: none;
+}
+
+.navbar-toggler:focus {
+  box-shadow: none;
+}
+
+.custom-toggler .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgb(240, 246, 252)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+  font-size: 24px;
+  margin-left: -15px;
+}
+
+.custom-toggler .navbar-toggler-icon:hover {
+  filter: brightness(70%);
+}
